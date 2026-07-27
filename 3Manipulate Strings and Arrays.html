@@ -1,40 +1,69 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Mini Text Analyzer</title>
+    <title>Mini Text Analyzer</title>
 </head>
+
 <body>
 
-<h2>Mini Text Analyzer</h2>
+    <h2>Mini Text Analyzer</h2>
 
-<textarea id="paragraphInput" rows="5" cols="60" placeholder="Enter paragraph"></textarea><br><br>
+    <textarea id="paragraphInput" rows="8" cols="60"
+        placeholder="Enter paragraph"></textarea>
+    <br><br>
 
-<button onclick="analyzeText()">Analyze</button>
+    <button onclick="analyzeText()">Analyze</button>
 
-<pre id="output"></pre>
+    <pre id="output"></pre>
 
-<script>
-function analyzeText() {
-    let text = document.getElementById("paragraphInput").value;
-    let words = text.match(/\b\w+\b/g) || [];
-    let freq = {};
+    <script>
+        function analyzeText() {
 
-    for (let i = 0; i < words.length; i++) {
-        let w = words[i].toLowerCase();
-        freq[w] = (freq[w] || 0) + 1;
-    }
+            const text = document.getElementById("paragraphInput").value;
 
-    let output = "Total Characters: " + text.length;
-    output += "\nTotal Words: " + words.length;
-    output += "\nTotal Sentences: " + ((text.match(/[.!?]/g) || []).length);
-    output += "\n\nWord Frequency:\n";
+            const totalChars = text.length;
 
-    for (let w in freq)
-        output += w + ": " + freq[w] + "\n";
+            const words = text.match(/\b\w+\b/g) || [];
+            const totalWords = words.length;
 
-    document.getElementById("output").textContent = output;
-}
-</script>
+            const totalSentences = (text.match(/[.!?]/g) || []).length;
+
+            const uniqueWords = [...new Set(words.map(function(word) {
+                return word.toLowerCase();
+            }))];
+
+            const freq = {};
+
+            words.forEach(function(word) {
+                const w = word.toLowerCase();
+
+                if (freq[w]) {
+                    freq[w]++;
+                } else {
+                    freq[w] = 1;
+                }
+            });
+
+            const sortedFreq = Object.entries(freq).sort(function(a, b) {
+                return b[1] - a[1];
+            });
+
+            let output = "";
+            output += "Total Characters: " + totalChars + "\n";
+            output += "Total Words: " + totalWords + "\n";
+            output += "Total Sentences: " + totalSentences + "\n";
+            output += "Unique Words: " + uniqueWords.join(", ") + "\n\n";
+            output += "Word Frequency:\n";
+
+            sortedFreq.forEach(function(item) {
+                output += item[0] + ": " + item[1] + "\n";
+            });
+
+            document.getElementById("output").textContent = output;
+        }
+    </script>
 
 </body>
+
 </html>
