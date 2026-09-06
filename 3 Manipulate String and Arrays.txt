@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mini Text Analyzer</title>
+</head>
+<body>
+
+<h2>Mini Text Analyzer</h2>
+
+<textarea id="paragraphInput" rows="5" cols="60" placeholder="Enter paragraph"></textarea><br><br>
+
+<button onclick="analyzeText()">Analyze</button>
+
+<pre id="output"></pre>
+
+<script>
+function analyzeText() {
+    let text = document.getElementById("paragraphInput").value;
+    let words = text.match(/\b\w+\b/g) || [];
+    let freq = {};
+
+    for (let i = 0; i < words.length; i++) {
+        let w = words[i].toLowerCase();
+        freq[w] = (freq[w] || 0) + 1;
+    }
+
+    let output = "Total Characters: " + text.length;
+    output += "\nTotal Words: " + words.length;
+    output += "\nTotal Sentences: " + ((text.match(/[.!?]/g) || []).length);
+    output += "\n\nWord Frequency:\n";
+
+    for (let w in freq)
+        output += w + ": " + freq[w] + "\n";
+
+    document.getElementById("output").textContent = output;
+}
+</script>
+
+</body>
+</html>
