@@ -1,52 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Image Slider</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel</title>
+    <style>
+        *{
+            margin: 0;
+        }
+        img{
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+        div button{
+            position: absolute;
+        }
+        .pre{
+            left: 0;
+            top: 50vh;
+        }
+        .nxt{
+            right: 0;
+            top: 50vh;
+        }
+    </style>
 </head>
-
 <body>
-
-<h2>Image Slider</h2>
-
-<div class="slider">
-
-    <img id="sliderImage" src="image1.jpg"
-         width="500" alt="Image">
-
-    <br>
-
-    <button onclick="previousImage()">Previous</button>
-    <button onclick="nextImage()">Next</button>
-
-</div>
-
-<script>
-let images = [
-    "image1.jpg",
-    "image2.jpg",
-    "image3.jpg"
-];
-
-let currentIndex = 0;
-
-function showImage() {
-    document.getElementById("sliderImage").src =
-        images[currentIndex];
-}
-
-function nextImage() {
-    currentIndex = (currentIndex + 1) % images.length;
-    showImage();
-}
-
-function previousImage() {
-    currentIndex =
-        (currentIndex - 1 + images.length) % images.length;
-
-    showImage();
-}
-setInterval(nextImage, 3000);
-</script>
-
+    <div>
+        <img id="img" src="https://unblast.com/wp-content/uploads/2021/01/Space-Background-Image-2.jpg" alt="">
+        <button class="pre" onclick="prev()">Previous</button>
+        <button class="nxt" onclick="next()">Next</button>
+        <script>
+            let images = ["https://unblast.com/wp-content/uploads/2021/01/Space-Background-Image-2.jpg","https://thumbs.dreamstime.com/b/incredibly-beautiful-sunset-sun-lake-sunrise-landscape-panorama-nature-sky-amazing-colorful-clouds-fantasy-design-115177001.jpg","https://png.pngtree.com/thumb_back/fh260/background/20240919/pngtree-a-background-of-orange-blue-and-yellow-gradients-with-gritty-appearance-image_16233934.jpg"]
+            let ind = 0;
+            function next(){
+                ind++;
+                if(ind==images.length){
+                    ind = 0;
+                }
+                document.getElementById("img").src = images[ind];
+            }
+            function prev(){
+                ind--;
+                if(ind==-1){
+                    ind = images.length-1
+                }
+                document.getElementById("img").src = images[ind];
+            }
+        </script>
+    </div>
 </body>
 </html>
