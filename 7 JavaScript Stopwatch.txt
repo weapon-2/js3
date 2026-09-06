@@ -1,54 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>JavaScript Stopwatch</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .time{
+            font-size: 3em;
+        }
+    </style>
 </head>
-
 <body>
+    <h1>StopWatch</h1>
+    <p class="time" id="watch">00:00</p>
+    <button onclick="start()">Start</button>
+    <button onclick="stop()">Stop</button>
+    <button onclick="reset()">Reset</button>
+    <script>
+        let sec = 0;
+        let setInt;
+        function output(){
+            sec++;
+            document.getElementById("watch").innerHTML 
+            = String(Math.floor(sec/60)).padStart(2,'0')+":"+String(sec%60).padStart(2,'0');
+        }
+        function start(){
+            if(!setInt)
+                setInt = setInterval(output,1000)
+        }
+        function stop(){
+            clearInterval(setInt);
+            setInt=null;
+        }
+        function reset(){
+            clearInterval(setInt);
+            setInt=null;
+            sec = 0;
+            document.getElementById("watch").innerHTML = "00:00";
+        }
 
-<h2>JavaScript Stopwatch</h2>
-
-<p id="display">00:00</p>
-
-<button onclick="start()">Start</button>
-<button onclick="stop()">Stop</button>
-<button onclick="reset()">Reset</button>
-
-<script>
-let seconds = 0;
-let intervalId = null;
-
-function updateDisplay() 
-{
-    let mins = String(Math.floor(seconds / 60)).padStart(2, "0");
-    let secs = String(seconds % 60).padStart(2, "0");
-
-    document.getElementById("display").textContent = `${mins}:${secs}`;
-}
-
-function start() 
-{
-    if (!intervalId) 
-    {
-        intervalId = setInterval(function () 
-        {
-            seconds++;
-            updateDisplay();
-        }, 1000);
-    }
-}
-function stop() 
-{
-    clearInterval(intervalId);
-    intervalId = null;
-}
-function reset() 
-{
-    stop();
-    seconds = 0;
-    updateDisplay();
-}
-</script>
-
+    </script>
 </body>
 </html>
