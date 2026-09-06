@@ -1,33 +1,19 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Word and Character Counter</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
-
 <body>
-
-    <h2>Live Word and Character Counter</h2>
-
-    <textarea id="mainText" rows="6" cols="50" placeholder="Start typing here..."></textarea>
-
-    <p>Characters: <span id="charCount">0</span></p>
-    <p>Words: <span id="wordCount">0</span></p>
+    <textarea id="input" onkeydown="handleText()" rows="10" cols="100"></textarea>
+    <div id="output"></div>
 
     <script>
-        document.getElementById("mainText").addEventListener("input", function () {
-
-            let text = this.value;
-
-            document.getElementById("charCount").innerText = text.length;
-
-            let trimmed = text.trim();
-            let words = trimmed === "" ? 0 : trimmed.split(/\s+/).length;
-
-            document.getElementById("wordCount").innerText = words;
-        });
+        function handleText(){
+            let input = document.getElementById("input").value;
+            document.getElementById("output").innerHTML = "Character: " + input.length + "\nWord: " + input.split(/\s+/).length
+        }
     </script>
-
 </body>
-
 </html>
