@@ -1,65 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>User Information Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON</title>
 </head>
-
 <body>
-
-<h2>User Information Dashboard</h2>
-
-<button onclick="loadUsers()">Load Users</button>
-
-<p id="status"></p>
-<div id="userData"></div>
-
-<script>
-function loadUsers() 
-{
-
-    let status = document.getElementById("status");
-    let output = document.getElementById("userData");
-
-    status.innerText = "Loading...";
-    output.innerHTML = "";
-
-    fetch("https://jsonplaceholder.typicode.com/users")
-        .then(response => 
-        {
-
-            if (!response.ok) 
-            {
-                throw new Error("Failed to fetch data");
-            }
-
-            return response.json();
+    <button onclick="loadUser()">Load Users</button>
+    <ul id="list"></ul>
+    <script>
+        function loadUser(){
+            let url = "https://jsonplaceholder.typicode.com/users";
+            fetch(url).then((res)=>{return res.json()}).then((data)=>{
+                data.map((val)=>{
+                    document.getElementById("list").innerHTML
+                     +=`<li><b>${val.name}</b> - ${val.email} - ${val.address.city} </li>`
+                })
+            })
         }
-    )
-
-        .then(data => 
-        {
-
-            status.innerText = "";
-
-            let list = data.map(user =>
-                `<li><b>${user.name}</b> -
-                ${user.email} -
-                ${user.address.city}</li>`
-            ).join("");
-
-            output.innerHTML = `<ul>${list}</ul>`;
-        })
-
-        .catch(error => 
-        {
-
-            status.innerText = "Failed to load data.";
-            status.classList.add("error");
-
-            console.log(error);
-        });
-}
-</script>
-
+    </script>
 </body>
 </html>
